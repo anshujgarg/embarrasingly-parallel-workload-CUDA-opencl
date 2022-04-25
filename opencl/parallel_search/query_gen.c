@@ -1,0 +1,70 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+int main(int argc, char *argv[]) {
+    printf("Usage ./query_gen <total_queries>\n");
+    unsigned int i,j ;
+    unsigned int list_size=0, total_blocks=0;
+//    int filename_length = strlen(argv[1]) + strlen(".bin");
+    int query_filename_length = strlen(argv[1]) + strlen("_query.bin");
+    unsigned int total_queries;
+    char *query_filename = malloc(query_filename_length+1);
+    
+    strcpy(query_filename,argv[1]);
+    strcat(query_filename,"_query.bin");
+    total_queries = atoi(argv[1]);
+
+ //   total_data_size = total_blocks*block_size;
+    unsigned int *data,*query_data;
+    unsigned int *read_data, *read_queries;
+    query_data= (unsigned int*)malloc(total_queries*sizeof(unsigned int));
+
+	
+    FILE *query_fptr = fopen(query_filename,"wb");
+    for (i=0;i<total_queries;i++)
+    	query_data[i]=i;
+
+    for (i=0; i<total_queries-1;i++)
+    {
+  //  	printf("query before = %u  ",query_data[i]);
+	j = i + rand() / (RAND_MAX / (total_queries - i) + 1);	    
+	unsigned int t = query_data[j];
+	query_data[j] = query_data[i];
+	query_data[i] = t;
+//	printf("query after = %u \n ",query_data[i]);
+    }
+
+
+    fwrite(query_data,sizeof(unsigned int),total_queries, query_fptr);
+    fclose(query_fptr);
+/*
+    
+    FILE *fptr_read = fopen(filename,"rb");
+    fread(read_data,sizeof(unsigned int),list_size,fptr_read);
+    fclose(fptr_read);
+    for (i=0;i<list_size;i++)
+    	printf("%u --  %u \t",i,read_data[i]);
+
+    FILE *fptr_query_read = fopen(query_filename,"rb");
+    fread(read_queries,sizeof(unsigned int),total_queries,fptr_query_read);
+    fclose(fptr_query_read);
+    for (i=0;i<total_queries;i++)
+    	printf("%u --  %u \t",i,read_queries[i]);
+
+ */
+ 
+    /*
+    for (i=0;i<total_blocks;i++) {
+	 //   a='A';
+	    for(j=0;j<block_size;j++) {
+	//	    memcpy(&data[i*block_size+j],&a,1);
+		    printf("%c", read_data[i*block_size + j]);
+	    }
+
+    }
+    printf("\n");
+ */
+	    
+    return 0;
+ }
