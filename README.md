@@ -1,5 +1,5 @@
 # embarrasingly-parallel-workload-CUDA-opencl
-Set of embarassingly parallel (data parallel) workload written in CUDA and OpenCL
+Set of embarassingly parallel (data parallel) workloads written in CUDA and OpenCL
 
 
 # Corresponding research paper
